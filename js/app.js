@@ -15,6 +15,8 @@ function createBoard() {
   const colorB = '#ddd';
 
   const N = 8;
+  const size = 8;
+  let offset = size/2 - 0.5; //
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {
@@ -24,12 +26,21 @@ function createBoard() {
         color = colorB;
       }
       el.setAttribute('color', color);
-      el.setAttribute('height', '1');
-      el.setAttribute('width', '1');
-      el.setAttribute('position', {x: i - 3.5, y: j - 3.5, z: 0});
+      el.setAttribute('height', size/N);
+      el.setAttribute('width', size/N);
+      el.setAttribute('position', {x: i - offset, y: j - offset, z: 0});
       boardEl.appendChild(el);
     }
   }
+
+  let boardH = 0.2;
+  let borderEl = document.createElement('a-box');
+  borderEl.setAttribute('color', '#333');
+  borderEl.setAttribute('width', size*1.05);
+  borderEl.setAttribute('height', size*1.05);
+  borderEl.setAttribute('depth', boardH);
+  borderEl.setAttribute('position', {x: 0, y: 0, z: -boardH*0.51 });
+  boardEl.appendChild(borderEl);
 }
 
 setup();
