@@ -14,6 +14,8 @@ let darkSquares = [];
 function setup() {
   console.log('app setup');
 
+  setupUI();
+
   createBoard(N, size);
   createPieces(N, size);
 
@@ -30,6 +32,10 @@ function setup() {
     console.log('end hover');
     e.target.setAttribute('material','color', e.target.dataset.ogColor);
   });
+}
+
+function setupUI() {
+
 }
 
 function createBoard(N = 8, size = 8) {

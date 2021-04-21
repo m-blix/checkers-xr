@@ -20,15 +20,13 @@
   <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
   <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
 
-  <a-entity id="board" position="0 0 -5" rotation="-90 0 0">
+  <a-text font="kelsonsans" value="Checkers XR" align="center" width="20" position="0 2 -3" color="white"></a-text>
+
+  <a-entity id="board" position="0 0 -7" rotation="-90 0 90">
 
     <a-box rotation="0 0 0" color="blue" width="0.1" height="0.1" depth="0.1"></a-box>
 
   </a-entity>
-
-
-  <a-plane position="0 -0.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4">
-  </a-plane>
 
   <a-sky color="#ECECEC" hide-in-ar-mode></a-sky>
 
