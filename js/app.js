@@ -24,7 +24,7 @@ function setup() {
   piece.addEventListener('mouseenter', function(e) {
     console.log('start hover');
     e.target.dataset.ogColor = e.target.getAttribute('color');
-    e.target.setAttribute('material','color','#cf8888');
+    e.target.setAttribute('material','color','#7295e8');
   });
   piece.addEventListener('mouseleave', function(e) {
     console.log('end hover');
