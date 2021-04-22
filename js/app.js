@@ -6,7 +6,7 @@ let sceneEl = $('#scene');
 let boardEl = $('#board');
 
 let N = 8;
-let size = 8;
+let size = 1;
 
 let els = [];
 let darkSquares = [];
@@ -42,7 +42,8 @@ function createBoard(N = 8, size = 8) {
   const colorA = '#389651';
   const colorB = '#ddd';
 
-  let offset = size/2 - 0.5; //
+  let spotSize = size/N;
+  let offset = spotSize * ((N-1)/2);
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {
@@ -52,9 +53,9 @@ function createBoard(N = 8, size = 8) {
         color = colorB;
       }
       el.setAttribute('color', color);
-      el.setAttribute('height', size/N);
-      el.setAttribute('width', size/N);
-      el.object3D.position.set(i - offset, j - offset, 0);
+      el.setAttribute('height', spotSize);
+      el.setAttribute('width', spotSize);
+      el.object3D.position.set(i*spotSize - offset, j*spotSize - offset, 0);
       el.dataset.row = i;
       el.dataset.col = j;
       boardEl.appendChild(el);
@@ -66,7 +67,7 @@ function createBoard(N = 8, size = 8) {
     }
   }
 
-  let boardH = 0.2;
+  let boardH = spotSize/3;
   let borderEl = document.createElement('a-box');
   borderEl.setAttribute('color', '#333');
   borderEl.setAttribute('width', size*1.05);
@@ -79,11 +80,12 @@ function createBoard(N = 8, size = 8) {
 function createPieces(N = 8, size = 8) {
   const numPiecesPerPlayer = 12;
 
+  let pSize = size/N / 2 * 0.8;
 
   for (let i = 0; i < numPiecesPerPlayer; i++) {
     let piece = document.createElement('a-cylinder');
-    piece.setAttribute('radius', 0.4);
-    piece.setAttribute('height', 0.2);
+    piece.setAttribute('radius', pSize);
+    piece.setAttribute('height', pSize/2);
     piece.setAttribute('color', "#c90e0e");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');
@@ -97,8 +99,8 @@ function createPieces(N = 8, size = 8) {
 
   for (let i = 0; i < numPiecesPerPlayer; i++) {
     let piece = document.createElement('a-cylinder');
-    piece.setAttribute('radius', 0.4);
-    piece.setAttribute('height', 0.2);
+    piece.setAttribute('radius', pSize);
+    piece.setAttribute('height', pSize/2);
     piece.setAttribute('color', "#333");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');

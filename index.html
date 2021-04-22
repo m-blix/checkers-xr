@@ -8,23 +8,22 @@
   <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
 </head>
 <body>
-<h1>Checkers XR</h1>
 
 <a-scene id="scene">
 
   <a-entity id="user"
     camera look-controls wasd-controls="acceleration:100"
     cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable"
-    position="0 1.5 0"></a-entity>
+    position="0 1 0"></a-entity>
 
   <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
   <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
 
-  <a-text font="kelsonsans" value="Checkers XR" align="center" width="20" position="0 2 -3" color="white"></a-text>
+  <a-text font="kelsonsans" value="Checkers XR" align="center" width="15" position="0 1 -2" color="white"></a-text>
 
-  <a-entity id="board" position="0 0 -7" rotation="-90 0 90">
+  <a-entity id="board" position="0 0 -2" rotation="-90 0 90">
 
-    <a-box rotation="0 0 0" color="blue" width="0.1" height="0.1" depth="0.1"></a-box>
+    <a-box rotation="0 0 0" color="blue" width="0.01" height="0.01" depth="0.01"></a-box>
 
   </a-entity>
 
