@@ -12,12 +12,12 @@
 <a-scene id="scene">
 
   <a-entity id="user"
-    camera look-controls wasd-controls="acceleration:100"
+    camera look-controls wasd-controls="acceleration:10"
     cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable"
     position="0 1 0"></a-entity>
 
-  <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
-  <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+  <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .piece"></a-entity>
+  <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .piece" line="color: #118A7E"></a-entity>
 
   <a-text font="kelsonsans" value="Checkers XR" align="center" width="15" position="0 1 -2" color="white"></a-text>
 

@@ -19,19 +19,7 @@ function setup() {
   createBoard(N, size);
   createPieces(N, size);
 
-  let piece = $('#board');
-  piece.addEventListener('click', function(e){
-    console.log('click piece');
-  });
-  piece.addEventListener('mouseenter', function(e) {
-    console.log('start hover');
-    e.target.dataset.ogColor = e.target.getAttribute('color');
-    e.target.setAttribute('material','color','#7295e8');
-  });
-  piece.addEventListener('mouseleave', function(e) {
-    console.log('end hover');
-    e.target.setAttribute('material','color', e.target.dataset.ogColor);
-  });
+  setupInteraction();
 }
 
 function setupUI() {
@@ -58,6 +46,8 @@ function createBoard(N = 8, size = 8) {
       el.object3D.position.set(i*spotSize - offset, j*spotSize - offset, 0);
       el.dataset.row = i;
       el.dataset.col = j;
+      el.classList.add('raycastable');
+      el.classList.add('square');
       boardEl.appendChild(el);
 
       els.push(el);
@@ -89,6 +79,7 @@ function createPieces(N = 8, size = 8) {
     piece.setAttribute('color', "#c90e0e");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');
+    piece.classList.add('piece');
 
     let posX = darkSquares[i].getAttribute('position').x;
     let posY = darkSquares[i].getAttribute('position').y;
@@ -104,6 +95,7 @@ function createPieces(N = 8, size = 8) {
     piece.setAttribute('color', "#333");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');
+    piece.classList.add('piece');
 
     let posX = darkSquares[i+20].getAttribute('position').x;
     let posY = darkSquares[i+20].getAttribute('position').y;
@@ -111,6 +103,53 @@ function createPieces(N = 8, size = 8) {
     piece.object3D.position.set(posX, posY, 0);
     boardEl.appendChild(piece);
   }
+}
+
+var hoverSelection = null;
+var pieceSelection = 1; // mode 0=square
+let raycaster = user.components['raycaster'];
+
+let pieceSelected = false;
+let selectedPiece = null;
+
+function setupInteraction() {
+  let piece = $('#board');
+  piece.addEventListener('click', function(e){
+    let intersectedEls = raycaster.intersectedEls;
+    console.log(intersectedEls);
+    if (pieceSelection) {
+      let el = intersectedEls.find(function(el){ if (el.classList.contains('piece')) { return el; } });
+      if (el) {
+        console.log('click piece');
+      }
+    } else {
+      let el = intersectedEls.find(function(el){ if (el.classList.contains('square')) { return el; } });
+      if (el) {
+        console.log('click square');
+      }
+    }
+
+    console.log(e.target.classList);
+  });
+  piece.addEventListener('mouseenter', function(e) {
+    let intersectedEls = raycaster.intersectedEls;
+    console.log(intersectedEls);
+
+    let el = intersectedEls.find(function(el){ if (el.classList.contains('piece')) { return el; } });
+    if (el) {
+      console.log('start piece hover');
+      el.dataset.ogColor = el.getAttribute('color');
+      el.setAttribute('material','color','#7295e8');
+      hoverSelection = el;
+    }
+  });
+  piece.addEventListener('mouseleave', function(e) {
+    if (hoverSelection) {
+      console.log('end piece hover');
+      hoverSelection.setAttribute('material','color', hoverSelection.dataset.ogColor);
+      hoverSelection = null;
+    }
+  });
 }
 
 setup();
