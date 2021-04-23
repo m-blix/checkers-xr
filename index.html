@@ -6,11 +6,12 @@
 
   <script src="js/aframe.min.js"></script>
   <script src="js/hide-in-ar.js"></script>
+  <script src="js/ar-hit-test.js"></script>
 
 </head>
 <body>
 
-<a-scene id="scene">
+<a-scene id="scene" webxr="optionalFeatures: hit-test;">
 
   <a-entity id="user"
     camera look-controls wasd-controls="acceleration:10"
@@ -19,6 +20,10 @@
 
   <a-entity id="leftHand" laser-controls="hand: left" raycaster="objects: .raycastable"></a-entity>
   <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .raycastable" line="color: #118A7E"></a-entity>
+
+  <a-entity id="reticle" ar-hit-test="doHitTest:false" visible="false">
+    <a-box rotation="0 0 0" color="pink" width="0.03" height="0.03" depth="0.03"></a-box>
+  </a-entity>
 
   <a-text font="kelsonsans" value="Checkers XR" align="center" width="15" position="0 1 -2" color="white"></a-text>
 
