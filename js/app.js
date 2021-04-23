@@ -71,11 +71,12 @@ function createPieces(N = 8, size = 8) {
   const numPiecesPerPlayer = 12;
 
   let pSize = size/N / 2 * 0.8;
+  let h = pSize/2;
 
   for (let i = 0; i < numPiecesPerPlayer; i++) {
     let piece = document.createElement('a-cylinder');
     piece.setAttribute('radius', pSize);
-    piece.setAttribute('height', pSize/2);
+    piece.setAttribute('height', h);
     piece.setAttribute('color', "#c90e0e");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');
@@ -91,7 +92,7 @@ function createPieces(N = 8, size = 8) {
   for (let i = 0; i < numPiecesPerPlayer; i++) {
     let piece = document.createElement('a-cylinder');
     piece.setAttribute('radius', pSize);
-    piece.setAttribute('height', pSize/2);
+    piece.setAttribute('height', h);
     piece.setAttribute('color', "#333");
     piece.setAttribute('rotation', '-90 0 0');
     piece.classList.add('raycastable');
@@ -100,7 +101,7 @@ function createPieces(N = 8, size = 8) {
     let posX = darkSquares[i+20].getAttribute('position').x;
     let posY = darkSquares[i+20].getAttribute('position').y;
 
-    piece.object3D.position.set(posX, posY, 0);
+    piece.object3D.position.set(posX, posY, h/2);
     boardEl.appendChild(piece);
   }
 }
@@ -179,6 +180,12 @@ function movePieceToSquare(piece, square) {
   console.log('movePieceToSquare');
   piece.object3D.position.x = square.object3D.position.x;
   piece.object3D.position.y = square.object3D.position.y;
+
+  piece.object3D.position.z = 0.0;
+
+  selectedPiece = null;
+  pieceSelection = 1;
+  piece.setAttribute('material', 'color', piece.dataset.ogColor);
 }
 
 setup();
