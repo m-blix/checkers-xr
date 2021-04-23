@@ -6,7 +6,7 @@ let sceneEl = $('#scene');
 let boardEl = $('#board');
 
 let N = 8;
-let size = 1;
+let size = 1.4;
 
 let els = [];
 let darkSquares = [];
@@ -113,43 +113,72 @@ let pieceSelected = false;
 let selectedPiece = null;
 
 function setupInteraction() {
-  let piece = $('#board');
-  piece.addEventListener('click', function(e){
+  let board = $('#board');
+
+  board.addEventListener('click', function(e){
     let intersectedEls = raycaster.intersectedEls;
-    console.log(intersectedEls);
+    //console.log(intersectedEls);
     if (pieceSelection) {
       let el = intersectedEls.find(function(el){ if (el.classList.contains('piece')) { return el; } });
       if (el) {
         console.log('click piece');
+        selectPiece(el);
       }
-    } else {
+    } else { // square
       let el = intersectedEls.find(function(el){ if (el.classList.contains('square')) { return el; } });
       if (el) {
         console.log('click square');
+        if (selectedPiece) {
+          movePieceToSquare(selectedPiece, el);
+        }
       }
     }
-
-    console.log(e.target.classList);
   });
-  piece.addEventListener('mouseenter', function(e) {
-    let intersectedEls = raycaster.intersectedEls;
-    console.log(intersectedEls);
 
-    let el = intersectedEls.find(function(el){ if (el.classList.contains('piece')) { return el; } });
-    if (el) {
-      console.log('start piece hover');
-      el.dataset.ogColor = el.getAttribute('color');
-      el.setAttribute('material','color','#7295e8');
-      hoverSelection = el;
+  board.addEventListener('mouseenter', function(e) {
+    let intersectedEls = raycaster.intersectedEls;
+
+    if (pieceSelection) {
+      let el = intersectedEls.find(function(el){ if (el.classList.contains('piece')) { return el; } });
+      if (el) {
+        console.log('start piece hover');
+        el.dataset.ogColor = el.getAttribute('color');
+        el.setAttribute('material','color','#7295e8');
+        hoverSelection = el;
+      }
+    } else { // square
+      let el = intersectedEls.find(function(el){ if (el.classList.contains('square')) { return el; } });
+      if (el) {
+        console.log('start piece hover');
+        el.dataset.ogColor = el.getAttribute('color');
+        el.setAttribute('material','color','#7295e8');
+        hoverSelection = el;
+      }
     }
   });
-  piece.addEventListener('mouseleave', function(e) {
-    if (hoverSelection) {
-      console.log('end piece hover');
+
+  board.addEventListener('mouseleave', function(e) {
+    if (hoverSelection && e.target != selectedPiece) {
+      console.log('end hover');
       hoverSelection.setAttribute('material','color', hoverSelection.dataset.ogColor);
       hoverSelection = null;
     }
   });
+}
+
+// todo:
+function selectPiece(p) {
+  console.log('select piece');
+  selectedPiece = p;
+  pieceSelection = 0; // switch to square
+  p.setAttribute('material','color', 'orange');
+  p.object3D.position.z = 0.1;
+}
+
+function movePieceToSquare(piece, square) {
+  console.log('movePieceToSquare');
+  piece.object3D.position.x = square.object3D.position.x;
+  piece.object3D.position.y = square.object3D.position.y;
 }
 
 setup();
